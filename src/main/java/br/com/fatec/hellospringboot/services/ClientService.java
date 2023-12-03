@@ -26,14 +26,33 @@ public class ClientService {
 
     }
 
-    public void deleteClientById(int id){
+    public void deleteClientById(int id) {
 
-        if (this.repository.existsById(id)){
+        if (this.repository.existsById(id)) {
             this.repository.deleteById(id);
-        } 
-        else {
+        } else {
             throw new EntityNotFoundException("Cliente não existe");
 
+        }
+    }
+
+    public Client save(Client client) {
+        return this.repository.save(client);
+    }
+
+    public void update(int id, Client client) {
+        try {
+            Client aux = repository.getReferenceById(id);
+            aux.setName(client.getName());
+            aux.setBalance(client.getBalance());
+            this.repository.save(aux);
+        } catch (EntityNotFoundException e)
+          {
+            throw new EntityNotFoundException("Cliente não cadastrado");
+          } 
+          catch (Exception e) 
+          {
+            throw new EntityNotFoundException("Não sei qual é o erro!");
         }
     }
 
