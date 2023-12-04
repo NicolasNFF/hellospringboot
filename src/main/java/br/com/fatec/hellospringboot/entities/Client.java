@@ -1,5 +1,6 @@
 package br.com.fatec.hellospringboot.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,11 +11,15 @@ import jakarta.persistence.Table;
 @Table(name = "TBL_CLIENT")
 public class Client {
 
-    @Id // definindo chave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gerar chave primaria de forma automatica
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
+    @NotBlank(message = "O nome do cliente não pode ser branco")
     private String name;
+
+    @Min(value = 0, message = "O saldo do cliente não pode ser negativo")
     private double balance;
 
     public int getId() {
